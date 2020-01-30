@@ -9,12 +9,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+
+/*  Calculates value of current card
+    int card: number of card (1-11) */
+int card_value(int val) {
+    // printf("%i",val);
+    if((val > 2) && (val < 7)) {
+        return 1;
+    } else if(val == 10) {
+        return -1;
+    }
+    return 0;
+}
+
+/*  Runs the main program loop
+    Process returns 0 when user inputs 'X' */
 int main() {
+    // declare a char array
     char card_name[3];
     int count = 0;
     do {
         puts("Enter the card_name: ");
-
+        
         // scan for two characters worth of character string (1 null is added)
         scanf("%2s", card_name);
         int val = 0;
@@ -36,11 +53,7 @@ int main() {
                 continue;
             }
         }
-        if((val > 2) && (val < 7)) {
-            count++;
-        } else if(val == 10) {
-            count--;
-        }
+        count += card_value(val);
         printf("Current count: %i\n", count);
     } while (card_name [0] != 'x');
     return 0;
