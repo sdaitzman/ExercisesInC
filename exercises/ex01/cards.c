@@ -1,4 +1,5 @@
 /* 
+* A card-counting program, split into functions
  * Copyright 2020 Sam Daitzman
  * CC-BY-SA all content I have the power to license
  * Based on code from "Head First C"
@@ -13,6 +14,8 @@ int main() {
     int count = 0;
     do {
         puts("Enter the card_name: ");
+
+        // scan for two characters worth of character string (1 null is added)
         scanf("%2s", card_name);
         int val = 0;
         switch(card_name[0]) {
