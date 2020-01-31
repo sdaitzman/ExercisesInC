@@ -9,7 +9,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+/*  Prompts user to entrer a card
+    char[3] card_name: an array to place the user input into */
+void prompt_user(char card_name[3]) {
+    puts("Enter the card_name: ");
+    // scan for two characters worth of character string (1 null is added)
+    scanf("%2s", card_name);
+}
 
 /*  Calculates value of current card
     int card: number of card (1-11) */
@@ -30,10 +36,7 @@ int main() {
     char card_name[3];
     int count = 0;
     do {
-        puts("Enter the card_name: ");
-        
-        // scan for two characters worth of character string (1 null is added)
-        scanf("%2s", card_name);
+        prompt_user(card_name);
         int val = 0;
         switch(card_name[0]) {
         case 'K':
