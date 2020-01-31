@@ -2,7 +2,7 @@
 
 int main() {
     int x = 5;
-    printf("Hello, World!\n");
+    printf("%i",x);
     return 0;
 }
 
@@ -22,7 +22,11 @@ Files and observations:
 - optimized2.s is the assembly code after compiling with the flag -O2
     Lots of lines have been removed entirely!! Specifically: lines 13-22
     In the new file, lines 13-15 are added and quite different
-
+- printX.s is the assembly code after switching to print x (not Hello World)
+    I compiled this without optimizations turned on. I notice that 
+    a couple lines changed, but surprisingly few. There's an interesting line in
+    the resulting file at line 30, where the string "%i" appears in the Assembly
+- 
 
 
 
