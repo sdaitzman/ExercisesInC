@@ -2,7 +2,8 @@
 
 int main() {
     int x = 5;
-    printf("%i",x);
+    int y = x + 1;
+    printf("%i",y);
     return 0;
 }
 
@@ -26,7 +27,10 @@ Files and observations:
     I compiled this without optimizations turned on. I notice that 
     a couple lines changed, but surprisingly few. There's an interesting line in
     the resulting file at line 30, where the string "%i" appears in the Assembly
-- 
+- printXO2.s contains the optimized version of the above
+    I notice a similar result to before, with many fewer lines in a similar way
+- The same pattern continues for PrintY.s and PrintYO2.s
+    I noticed that PrintY has lots of movl operations in particular.
 
 
 
