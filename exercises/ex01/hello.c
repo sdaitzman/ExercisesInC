@@ -19,7 +19,10 @@ Files and observations:
     I think that line is adding the int value 5 to a particular memory location
     Later in the file, I see a line 'movl	%eax, -12(%rbp)'
     That line may be changing the amount of reclaimed memory. I'm unsure.
-- 
+- optimized2.s is the assembly code after compiling with the flag -O2
+    Lots of lines have been removed entirely!! Specifically: lines 13-22
+    In the new file, lines 13-15 are added and quite different
+
 
 
 
