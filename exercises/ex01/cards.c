@@ -5,6 +5,7 @@
  * Based on code from "Head First C"
  * Created as part of Software Systems at Olin College
  * Three functions: prompt_user, card_value, and main
+ * hello.c is in the same directory
  */
 
 #include <stdio.h>
