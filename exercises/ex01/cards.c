@@ -13,14 +13,14 @@
     char[3] card_name: an array to place the user input into */
 void prompt_user(char card_name[3]) {
     puts("Enter the card_name: ");
-    // scan for two characters worth of character string (1 null is added)
+    /* scan for two characters worth of character string (1 null is added) */
     scanf("%2s", card_name);
 }
 
 /*  Calculates value of current card
     int card: number of card (1-11) */
 int card_value(int val) {
-    // printf("%i",val);
+    /* printf("%i",val); */
     if((val > 2) && (val < 7)) {
         return 1;
     } else if(val == 10) {
@@ -32,12 +32,13 @@ int card_value(int val) {
 /*  Runs the main program loop
     Process returns 0 when user inputs 'X' */
 int main() {
-    // declare a char array
+    /* declare a char array */
     char card_name[3];
     int count = 0;
     do {
-        prompt_user(card_name);
         int val = 0;
+
+        prompt_user(card_name);
         switch(card_name[0]) {
         case 'K':
         case 'Q':
