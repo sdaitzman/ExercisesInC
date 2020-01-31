@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*  Prompts user to entrer a card
+/*  Prompts user to enter a card
     char[3] card_name: an array to place the user input into */
 void prompt_user(char card_name[3]) {
     puts("Enter the card_name: ");
