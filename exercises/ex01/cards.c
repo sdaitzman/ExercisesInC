@@ -4,6 +4,7 @@
  * CC-BY-SA all content I have the power to license
  * Based on code from "Head First C"
  * Created as part of Software Systems at Olin College
+ * Three functions: prompt_user, card_value, and main
  */
 
 #include <stdio.h>
