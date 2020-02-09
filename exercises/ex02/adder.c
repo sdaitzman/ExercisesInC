@@ -26,6 +26,7 @@ int main() {
 
     char userInput[maxInputLength];
     int nums[maxInts];
+    int count = 0;
 
     while(fgets(userInput, maxInputLength, stdin) != NULL) {
         int n = atoi(userInput);
@@ -35,12 +36,13 @@ int main() {
         } else if(n == 0) {
             printf("Hmm, I don't think that: %s is a valid number.\n", userInput);
         } else {
-            printf("Got %i\n", n);
+            printf("Got %i for %i-th number.\n", n, count);
+            nums[count++] = n;
         }
         printf("\n > ");
     }
 
-
+    printf("Adding!");
 
     return 0;
 }
