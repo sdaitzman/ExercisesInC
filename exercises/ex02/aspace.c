@@ -39,5 +39,11 @@ int main ()
 
     localVar(10);
 
+    void *chunk1 = malloc(17);
+    void *chunk2 = malloc(17);
+
+    printf ("Address of chunk1 is %p\n", chunk1);
+    printf ("Address of chunk2 is %p\n", chunk2);
+
     return 0;
 }
