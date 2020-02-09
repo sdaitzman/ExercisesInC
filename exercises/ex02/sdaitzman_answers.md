@@ -85,3 +85,5 @@ Here's the output:
 5. See `stack.c`.
 
 ## Adder
+
+See `adder.c`.
