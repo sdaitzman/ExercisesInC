@@ -7,8 +7,8 @@ Copyright 2020 Sam Daitzman
 #include <stdlib.h>
 #include <string.h>
 
-#define maxInputLength 5
-#define maxInts 3
+#define maxInputLength 12
+#define maxInts 12
 
 int add(int* nums, int count) {
     int total = 0;
@@ -18,7 +18,17 @@ int add(int* nums, int count) {
     return total;
 }
 
-int getInput() {
+int parseInput(char* userInput) {
+    if(strlen(userInput) < 2) {
+        printf("Hmm, I don't think you input anything. Try again maybe?\n");
+        return 0;
+    } else if(atoi(userInput) == 0) {
+        printf("Hmm, I don't think that: %s is a valid number.\n", userInput);
+        return 0;
+    } else {
+        printf("Got %i.\n", atoi(userInput));
+        return atoi(userInput);
+    }
     return 0;
 }
 
@@ -40,16 +50,9 @@ int main() {
             return 1;
         }
 
-        int n = atoi(userInput);
-
-        if(strlen(userInput) < 2) {
-            printf("Hmm, I don't think you input anything. Try again maybe?\n");
-        } else if(n == 0) {
-            printf("Hmm, I don't think that: %s is a valid number.\n", userInput);
-        } else {
-            printf("Got %i for %i-th number.\n", n, count+1);
-            nums[count++] = n;
-        }
+        int n = parseInput(userInput);
+        if(n) nums[count++] = n;
+        
 
         if(count >= maxInts) {
             printf("Max numbers reached. Calculating total...\n\n");
@@ -65,9 +68,7 @@ int main() {
         total += nums[i];
     }
 
-
-
-    printf("Added! Total: %i\n", total);
+    printf("Added! Total: %i\n", add(nums, count));
 
     return 0;
 }
