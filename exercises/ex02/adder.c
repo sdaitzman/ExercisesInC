@@ -10,8 +10,12 @@ Copyright 2020 Sam Daitzman
 #define maxInputLength 5
 #define maxInts 3
 
-int add() {
-    return 0;
+int add(int* nums, int count) {
+    int total = 0;
+    for(int i = 0; i < count; i++) {
+        total += nums[i];
+    }
+    return total;
 }
 
 int getInput() {
@@ -60,6 +64,8 @@ int main() {
     for(int i = 0; i < count; i++) {
         total += nums[i];
     }
+
+
 
     printf("Added! Total: %i\n", total);
 
