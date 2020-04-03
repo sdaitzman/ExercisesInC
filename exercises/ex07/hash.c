@@ -145,10 +145,13 @@ int hash_int(void *p)
 */
 int hash_string(void *p)
 {
+    // set s to head of string
     char *s = (char *) p;
     int total = 0;
     int i = 0;
 
+    // iterate through the string and add the keycodes here
+    // TODO: switch to an order-dependent hash
     while (s[i] != 0) {
         total += s[i];
         i++;
@@ -178,7 +181,18 @@ int hash_hashable(Hashable *hashable)
 */
 int equal_int (void *ip, void *jp)
 {
-    // FILL THIS IN!
+
+    // declare local ints on the stack from dereferenced casted pointer values
+    int ip_int = *(int*)ip;
+    int jp_int = *(int*)jp;
+
+    // printf("%i and %i", ip_int, jp_int);
+
+    // run int comparison as usual
+    if(ip_int == jp_int) {
+        return 1;
+    }
+
     return 0;
 }
 
@@ -192,7 +206,17 @@ int equal_int (void *ip, void *jp)
 */
 int equal_string (void *s1, void *s2)
 {
-    // FILL THIS IN!
+
+    // declare local strings on stack from dereferenced casted pointer values
+    char* s1_casted = (char*)s1;
+    char* s2_casted = (char*)s2;
+
+    // run string comparison with strcmp as usual
+    // strcmp returns 0 if the contents are equal
+    if(strcmp(s1_casted, s2_casted) == 0) {
+        return 1;
+    }
+
     return 0;
 }
 
@@ -207,7 +231,17 @@ int equal_string (void *s1, void *s2)
 */
 int equal_hashable(Hashable *h1, Hashable *h2)
 {
-    // FILL THIS IN!
+
+    // try to hash both and check equality
+    int compare = (hash_hashable(h1) == hash_hashable(h2));
+
+    // printf("%i", compare);
+    // TODO: check what these values actually are in practice
+
+    if(compare) {
+        return 1;
+    }
+
     return 0;
 }
 
@@ -296,7 +330,21 @@ Node *prepend(Hashable *key, Value *value, Node *rest)
 /* Looks up a key and returns the corresponding value, or NULL */
 Value *list_lookup(Node *list, Hashable *key)
 {
-    // FILL THIS IN!
+
+    // follow linkedlist chain without overwriting param
+    Node* current = list;
+    while(current != NULL) {
+        // while not at end of list
+
+        // if the hash matches, return the value!
+        if(equal_hashable(key, current->key)) return current->value;
+        // printf("equal_hashable says %i\n", equal_hashable(key, current->key));
+
+        // follow to next node
+        current = current->next;
+    }
+
+    // return NULL if no value has been found
     return NULL;
 }
 
@@ -341,15 +389,27 @@ void print_map(Map *map)
 /* Adds a key-value pair to a map. */
 void map_add(Map *map, Hashable *key, Value *value)
 {
-    // FILL THIS IN!
+
+    // note from Katie F in SoftSys Chat:
+    // add the node to the i’th entry of the map list,
+    // where i is the hash function of the key
+
+    // int key_hash = hash_hashable(key);
+
+    // get index from remainder of key hash divided by n in map
+    int index = hash_hashable(key) % map->n;
+    map -> lists[index] = prepend(key, value, map->lists[index]);
+
 }
 
 
 /* Looks up a key and returns the corresponding value, or NULL. */
 Value *map_lookup(Map *map, Hashable *key)
 {
-    // FILL THIS IN!
-    return NULL;
+    int index = hash_hashable(key) % map->n;
+    Value* ret = list_lookup(map->lists[index], key);
+    
+    return ret;
 }
 
 
