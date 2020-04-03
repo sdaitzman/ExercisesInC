@@ -107,8 +107,19 @@ returns: >0 if a > b
           0 if a==b
 */
 int compare_nodes(const void* a, const void* b) {
-    // FILL THIS IN!
-    return 0;
+    // cast our void pointers correctly to Nodes
+    Node* na = (Node*)a;
+    Node* nb = (Node*)b;
+
+    // get values from our Node
+    int valA = na->val;
+    int valB = nb->val;
+
+    // print values for testing
+    printf("%i | %i\n", valA, valB);
+
+    // return difference
+    return valA - valB;
 }
 
 int main() {
