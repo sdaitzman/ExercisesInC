@@ -11,7 +11,9 @@ Prints the results to stdout.
 #include <stdlib.h>
 #include <glib.h>
 
-
+void print_hash_table(gpointer key, gpointer value, gpointer user_data) {
+    printf("%s: %i\n", (char*) key, *(int*) value);
+}
 
 int main(int argc, char** argv) {
     // holds the size of the file
@@ -42,22 +44,26 @@ int main(int argc, char** argv) {
         gchar *current = words[0];
 
         // declare a hash table to track word counts
-        GHashTable *wordCount = g_hash_table_new(&g_str_hash, &g_str_equal);
+        GHashTable *wordCount = g_hash_table_new(g_str_hash, g_str_equal);
+
 
         // iterate through parsed words
         int i = 0;
         while(current != NULL) {
             // print current word for debugging
-            printf("Output: %s\n", current);
+            // printf("Output: %s\n", current);
 
             if(!g_hash_table_contains(wordCount, current)){
                 // set initial value to compound literal pointer to 1
-                g_hash_table_insert(wordCount, current, &((int){1}));
-                printf("Did not contain %s\n", current);
+                int initialValue = 1;
+                int *initialPointerVal = &initialValue;
+                g_hash_table_insert(wordCount, current, initialPointerVal);
+                printf("%s \t: added, now of length %i\n", current, g_hash_table_size(wordCount));
             } else {
-                gint *val = g_hash_table_lookup(wordCount, current);
+                int *val = g_hash_table_lookup(wordCount, current);
+                // printf("%i\n", *val);
                 *val = *val + 1;
-                printf("Did contain %s with count %i\n", current, *val);
+                printf("%s \t: iterated to %i in hashmap of length %i\n", current, *val, g_hash_table_size(wordCount));
             }
 
             // iterate to next word
@@ -65,11 +71,17 @@ int main(int argc, char** argv) {
             current = words[i];
         }
 
+        g_hash_table_foreach(wordCount, print_hash_table, NULL);
+
 
     } else {
         printf("Failed to parse file, unfortunately.");
         return 1;
     }
+
+    // these are 261238937 and 193491849 which do not collide
+    // printf("%i\n", g_str_hash("hello"));
+    // printf("%i\n", g_str_hash("foo"));
 
     // program reached end with no errrors
     return 0;

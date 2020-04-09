@@ -1,3 +1,3 @@
 hello world foo bar baz hello foo hello hello
 foo hello foo
-also semicolon; and period. and let's put in some apostrophes, and also commas
+also ; and period. and let's put in some', and also commas
