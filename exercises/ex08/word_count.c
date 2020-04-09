@@ -42,10 +42,9 @@ int main(int argc, char** argv) {
         gchar *current = words[0];
         int i = 0;
         while(current != NULL) {
-            current = words[i];
-
             printf("Output: %s\n", current);
             i++;
+            current = words[i];
         }
 
     } else {
