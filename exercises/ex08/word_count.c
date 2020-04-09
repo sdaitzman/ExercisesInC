@@ -14,25 +14,36 @@ Prints the results to stdout.
 
 
 int main(int argc, char** argv) {
-    GList* list = NULL;
-    list = g_list_append(list, "Hello world!");
-    printf("The first item is '%s'\n", (char *) g_list_first(list)->data);
-
+    // holds the size of the file
     gsize length;
+
+    // declares content and filename strings
     gchar *content, *filename = "file.txt";
-    if(g_file_get_contents(filename, &content, &length, NULL)) {
-        printf("Got %s\n", content);
 
-        gchar *whitespace = " ";
+    // fileparsing check
+    if(g_file_get_contents(filename, &content, &length, NULL)) { 
+        
+        // printf("Got %s\n", content);
 
-        gchar **words = g_strsplit(content, whitespace, -1);
+        // switches to the familiar JS regex parser (can use logical (OR |) to
+        // set multiple option flags in this enum
+        GRegexCompileFlags regexflags =
+            (GRegexCompileFlags) (G_REGEX_JAVASCRIPT_COMPAT);
+        
+        // turns on regex matching for carriage returns
+        GRegexMatchFlags matchflags =
+            (GRegexMatchFlags) (G_REGEX_MATCH_NEWLINE_CRLF);
 
-        // TODO: look into https://developer.gnome.org/glib/stable/glib-Lexical-Scanner.html
+        // match spaces (\040) or newlines(\n), and some punctuation
+        gchar *pattern = "\040|\n|;|,|[.]";
+        gchar **words = g_regex_split_simple(pattern, content, regexflags, 0);
 
+        // pointer to current parsed word
         gchar *current = words[0];
         int i = 0;
         while(current != NULL) {
             current = words[i];
+
             printf("Output: %s\n", current);
             i++;
         }
@@ -42,6 +53,6 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-
+    // program reached end with no errrors
     return 0;
 }
