@@ -40,12 +40,31 @@ int main(int argc, char** argv) {
 
         // pointer to current parsed word
         gchar *current = words[0];
+
+        // declare a hash table to track word counts
+        GHashTable *wordCount = g_hash_table_new(&g_str_hash, &g_str_equal);
+
+        // iterate through parsed words
         int i = 0;
         while(current != NULL) {
+            // print current word for debugging
             printf("Output: %s\n", current);
+
+            if(!g_hash_table_contains(wordCount, current)){
+                // set initial value to compound literal pointer to 1
+                g_hash_table_insert(wordCount, current, &((int){1}));
+                printf("Did not contain %s\n", current);
+            } else {
+                gint *val = g_hash_table_lookup(wordCount, current);
+                *val = *val + 1;
+                printf("Did contain %s with count %i\n", current, *val);
+            }
+
+            // iterate to next word
             i++;
             current = words[i];
         }
+
 
     } else {
         printf("Failed to parse file, unfortunately.");
