@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
     list = g_list_append(list, "Hello world!");
     printf("The first item is '%s'\n", (char *) g_list_first(list)->data);
 
-    gssize length;
+    gsize length;
     gchar *content, *filename = "file.txt";
     if(g_file_get_contents(filename, &content, &length, NULL)) {
         printf("Got %s\n", content);
