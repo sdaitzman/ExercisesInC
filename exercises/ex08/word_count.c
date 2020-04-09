@@ -65,7 +65,8 @@ int main(int argc, char** argv) {
 
                 // increase value by 1
                 int val = *(int*) g_hash_table_lookup(wordCount, current) + 1;
-                int *valPointer = &val;
+                int *valPointer = (int *)malloc(sizeof(int));
+                *valPointer = val;
 
                 // set value in hashmap
                 g_hash_table_replace(wordCount, current, valPointer);
