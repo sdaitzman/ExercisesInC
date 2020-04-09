@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
     gsize length;
 
     // declares content and filename strings
-    gchar *content, *filename = "file.txt";
+    gchar *content, *filename = "file2.txt";
 
     // fileparsing check
     if(g_file_get_contents(filename, &content, &length, NULL)) { 
@@ -58,12 +58,14 @@ int main(int argc, char** argv) {
                 int initialValue = 1;
                 int *initialPointerVal = &initialValue;
                 g_hash_table_insert(wordCount, current, initialPointerVal);
-                printf("%s \t: added, now of length %i\n", current, g_hash_table_size(wordCount));
+                // printf("%s \t: added, now of length %i\n", current, g_hash_table_size(wordCount));
             } else {
-                int *val = g_hash_table_lookup(wordCount, current);
-                // printf("%i\n", *val);
-                *val = *val + 1;
-                printf("%s \t: iterated to %i in hashmap of length %i\n", current, *val, g_hash_table_size(wordCount));
+                int val = *(int*) g_hash_table_lookup(wordCount, current) + 1;
+                int *valPointer = &val;
+                // printf("%i\n", *valPointer);
+                g_hash_table_replace(wordCount, current, valPointer);
+
+                // printf("%s \t: iterated to %i in hashmap of length %i\n", current, *valPointer, g_hash_table_size(wordCount));
             }
 
             // iterate to next word
