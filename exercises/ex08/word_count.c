@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
     gsize length;
 
     // declares content and filename strings
-    gchar *content, *filename = "file2.txt";
+    gchar *content, *filename = "file.txt";
 
     // fileparsing check
     if(g_file_get_contents(filename, &content, &length, NULL)) { 
@@ -53,6 +53,7 @@ int main(int argc, char** argv) {
             // print current word for debugging
             // printf("Output: %s\n", current);
 
+            // if the current word is not yet in the hashmap, add it
             if(!g_hash_table_contains(wordCount, current)){
                 // set initial value to compound literal pointer to 1
                 int initialValue = 1;
@@ -60,11 +61,16 @@ int main(int argc, char** argv) {
                 g_hash_table_insert(wordCount, current, initialPointerVal);
                 // printf("%s \t: added, now of length %i\n", current, g_hash_table_size(wordCount));
             } else {
+                // iterate the word in the hashmap
+
+                // increase value by 1
                 int val = *(int*) g_hash_table_lookup(wordCount, current) + 1;
                 int *valPointer = &val;
-                // printf("%i\n", *valPointer);
+
+                // set value in hashmap
                 g_hash_table_replace(wordCount, current, valPointer);
 
+                // print current status
                 // printf("%s \t: iterated to %i in hashmap of length %i\n", current, *valPointer, g_hash_table_size(wordCount));
             }
 

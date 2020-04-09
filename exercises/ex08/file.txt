@@ -1,3 +1,6 @@
-hello world foo bar baz hello foo hello hello
-foo hello foo
-also ; and period. and let's put in some', and also commas
+hello hello world
+hello foo bar
+baz hello
+bar
+
+hello. hello, hello
