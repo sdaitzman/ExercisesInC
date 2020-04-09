@@ -22,6 +22,13 @@ int main(int argc, char** argv) {
     gchar *content, *filename = "file.txt";
     if(g_file_get_contents(filename, &content, &length, NULL)) {
         printf("Got %s\n", content);
+
+        gchar *split = " ";
+
+        gchar **words = g_strsplit(content, split, 999);
+
+        printf("Output: %s\n", words[0]);
+
     } else {
         printf("Failed to parse file, unfortunately.");
         return 1;
