@@ -12,7 +12,7 @@ Prints the results to stdout.
 #include <glib.h>
 
 void print_hash_table(gpointer key, gpointer value, gpointer user_data) {
-    printf("%s: %i\n", (char*) key, *(int*) value);
+    if(strlen(key) > 0) printf("%s: %i\n", (char*) key, *(int*) value);
 }
 
 int main(int argc, char** argv) {
