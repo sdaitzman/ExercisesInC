@@ -23,11 +23,22 @@ int main(int argc, char** argv) {
     if(g_file_get_contents(filename, &content, &length, NULL)) {
         printf("Got %s\n", content);
 
-        gchar *split = " ";
+        g_strchomp(content);
 
-        gchar **words = g_strsplit(content, split, 999);
+        gchar *space = " ";
+        gchar *nl = "\n";
 
-        printf("Output: %s\n", words[0]);
+        gchar **words = g_strsplit(content, space, 999);
+
+        // TODO: look into https://developer.gnome.org/glib/stable/glib-Lexical-Scanner.html
+
+        gchar *current = words[0];
+        int i = 0;
+        while(current != NULL) {
+            current = words[i];
+            printf("Output: %s\n", current);
+            i++;
+        }
 
     } else {
         printf("Failed to parse file, unfortunately.");
