@@ -23,12 +23,9 @@ int main(int argc, char** argv) {
     if(g_file_get_contents(filename, &content, &length, NULL)) {
         printf("Got %s\n", content);
 
-        g_strchomp(content);
+        gchar *whitespace = " ";
 
-        gchar *space = " ";
-        gchar *nl = "\n";
-
-        gchar **words = g_strsplit(content, space, 999);
+        gchar **words = g_strsplit(content, whitespace, -1);
 
         // TODO: look into https://developer.gnome.org/glib/stable/glib-Lexical-Scanner.html
 
