@@ -15,6 +15,25 @@ License: MIT License https://opensource.org/licenses/MIT
 #include <sys/wait.h>
 
 
+
+
+
+// Question 2: Memory Sharing Across Forks
+/*
+
+We are interested in seeing whether different types of memory are shared across
+forks, so I'll create a few variables that are global, stack and heap variables
+and print them out. 
+
+
+*/
+
+
+       int a_global = 100;
+static int a_static = 100;
+
+
+
 // errno is an external global variable that contains
 // error information
 extern int errno;
@@ -30,11 +49,20 @@ double get_seconds() {
 }
 
 
-void child_code(int i)
+
+// modified child_code to take stack and heap variables for testing, and to
+// print out the global and static variables created above
+void child_code(int i, int a_stack, int* a_heap)
 {
+
+    printf("Before changing: i=%d \t a_global=%d \t a_static=%d \t a_stack=%d \t a_heap=%d", i, a_global, a_static, a_stack, *a_heap);
+
+
     sleep(i);
     printf("Hello from child %d.\n", i);
 }
+
+
 
 // main takes two parameters: argc is the number of command-line
 // arguments; argv is an array of strings containing the command
@@ -45,6 +73,11 @@ int main(int argc, char *argv[])
     pid_t pid;
     double start, stop;
     int i, num_children;
+
+
+    // I added two new variables, one on the stack and one on the heap
+    int  a_stack = 100;
+    int* a_heap = malloc(sizeof(int));
 
     // the first command-line argument is the name of the executable.
     // if there is a second, it is the number of children to create.
@@ -72,7 +105,10 @@ int main(int argc, char *argv[])
 
         /* see if we're the parent or the child */
         if (pid == 0) {
-            child_code(i);
+
+            // modification: I pass the stack and heap variables
+
+            child_code(i, a_stack, &a_heap);
             exit(i);
         }
     }
