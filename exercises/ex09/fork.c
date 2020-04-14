@@ -25,6 +25,26 @@ We are interested in seeing whether different types of memory are shared across
 forks, so I'll create a few variables that are global, stack and heap variables
 and print them out. 
 
+As expected they're all separate. Logs:
+
+Creating child 0.
+Creating child 1.
+After changing: i=0      a_global=100    a_static=100    a_stack=100     a_heap=0
+Before changing: i=0     a_global=101    a_static=101    a_stack=101     a_heap=1
+Creating child 2.
+Hello from child 0.
+After changing: i=1      a_global=100    a_static=100    a_stack=100     a_heap=0
+Before changing: i=1     a_global=101    a_static=101    a_stack=101     a_heap=1
+Hello from the parent.
+Child 65864 exited with error code 0.
+After changing: i=2      a_global=100    a_static=100    a_stack=100     a_heap=0
+Before changing: i=2     a_global=101    a_static=101    a_stack=101     a_heap=1
+Hello from child 1.
+Child 65865 exited with error code 1.
+Hello from child 2.
+Child 65866 exited with error code 2.
+Elapsed time = 2.002215 seconds.
+
 
 */
 
@@ -52,10 +72,18 @@ double get_seconds() {
 
 // modified child_code to take stack and heap variables for testing, and to
 // print out the global and static variables created above
-void child_code(int i, int a_stack, int* a_heap)
+// TODO: ask about why the stack int here is passed by pointer like this
+void child_code(int i, int* a_stack, int* a_heap)
 {
 
-    printf("Before changing: i=%d \t a_global=%d \t a_static=%d \t a_stack=%d \t a_heap=%d", i, a_global, a_static, a_stack, *a_heap);
+    printf("After changing: i=%d \t a_global=%d \t a_static=%d \t a_stack=%d \t a_heap=%d\n", i, a_global, a_static, *a_stack, *a_heap);
+
+    a_global++;
+    a_static++;
+    (*a_stack)++;
+    (*a_heap)++;
+
+    printf("Before changing: i=%d \t a_global=%d \t a_static=%d \t a_stack=%d \t a_heap=%d\n", i, a_global, a_static, *a_stack, *a_heap);
 
 
     sleep(i);
