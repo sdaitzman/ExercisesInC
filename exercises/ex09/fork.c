@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
 
             // modification: I pass the stack and heap variables
 
-            child_code(i, a_stack, &a_heap);
+            child_code(i, &a_stack, a_heap);
             exit(i);
         }
     }
