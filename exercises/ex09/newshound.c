@@ -3,6 +3,8 @@
 Downloaded from https://github.com/twcamper/head-first-c
 
 Modified by Allen Downey.
+Modified again by Sam Daitzman.
+
 */
 
 #include <stdio.h>
@@ -11,17 +13,16 @@ Modified by Allen Downey.
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/types.h>
-#include <wait.h>
+#include <sys/wait.h>
 
 
-void error(char *msg)
-{
+void error(char *msg) {
     fprintf(stderr, "%s: %s\n", msg, strerror(errno));
     exit(1);
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
+    pid_t pid;
     if (argc < 2) {
         fprintf(stderr, "Usage: %s <search phrase>\n", argv[0]);
         return 1;
@@ -40,12 +41,16 @@ int main(int argc, char *argv[])
     char var[255];
 
     for (int i=0; i<num_feeds; i++) {
-        sprintf(var, "RSS_FEED=%s", feeds[i]);
-        char *vars[] = {var, NULL};
-
-        int res = execle(PYTHON, PYTHON, SCRIPT, search_phrase, NULL, vars);
-        if (res == -1) {
-            error("Can't run script.");
+        pid = fork();
+        if(pid < 0) {
+            error("An error occurred in forking the process.");
+        } else if(pid == 0) {
+            sprintf(var, "RSS_FEED=%s", feeds[i]);
+            char *vars[] = {var, NULL};
+            int res = execle(PYTHON, PYTHON, SCRIPT, search_phrase, NULL, vars);
+            if (res == -1) {
+                error("Can't run script.");
+            }
         }
     }
     return 0;
