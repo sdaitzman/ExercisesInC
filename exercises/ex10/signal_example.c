@@ -20,6 +20,7 @@ Modified by Sam Daitzman
 #include <signal.h>
 
 int score = 0;
+int ending = 0;
 
 /* Set up a signal handler.
 
@@ -41,12 +42,12 @@ void end_game(int sig)
     printf("\nFinal score: %i\n", score);
     exit(EXIT_SUCCESS);
 }
-
 /* Signal handler: Notify the user and raise SIGINT.
 */
 void times_up(int sig) {
-    puts("\nTIME'S UP!");
-    raise(SIGINT);
+    // puts("\nTIME'S UP!");
+    // raise(SIGINT);
+    ending = 1; // set a flag instead of exiting right away
 }
 
 int main(void) {
@@ -86,6 +87,8 @@ int main(void) {
             printf("\nWrong!\n");
         }
         printf("Score: %i\n", score);
+
+        if(ending) end_game(0);
     }
     return 0;
 }
