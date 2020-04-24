@@ -7,6 +7,7 @@ Based on an example from
 https://raw.githubusercontent.com/twcamper/head-first-c/master/10/math-master.c
 
 Based on an example in Head First C.
+Modified by Sam Daitzman
 
 */
 
@@ -63,7 +64,7 @@ int main(void) {
 
     while(1) {
         // pose the question
-        a = rand() % 11;
+        a = rand() % 11; // TODO: think about why this line works
         b = rand() % 11;
         printf("\nWhat is %d times %d? ", a, b);
 
