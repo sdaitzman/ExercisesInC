@@ -1,6 +1,7 @@
 /* Starter code for the echo exercise.
 
 Loosely based on the example in Head First C Chapter 10
+With modifications by Sam Daitzman
 */
 
 #include <stdio.h>
@@ -52,15 +53,19 @@ void child_code(int pipe_to_child[])
 
 int main(int argc, char *argv[])
 {
-    /*Create a pipe */
+    /*Create a pipe from parent to child*/
     int pipe_to_child[2];
-    if (pipe(pipe_to_child) == -1)
-        error("Can't create the first pipe");
+
+    // Create a pipe from child to parent
+    int pipe_to_parent[2];
+
+    // try opening pipes
+    if (pipe(pipe_to_child) == -1) error("Can't create the pipe to child");
+    if (pipe(pipe_to_parent) == -1) error("Can't create the pipe to parent");
 
     /*Fork a child process*/
     pid_t child_pid = fork();
-    if (child_pid == -1)
-        error("Can't fork process");
+    if (child_pid == -1) error("Can't fork process");
 
     if (child_pid == 0) {
         child_code(pipe_to_child);
