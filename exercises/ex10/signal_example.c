@@ -69,7 +69,7 @@ int main(void) {
         printf("\nWhat is %d times %d? ", a, b);
 
         // set (or reset) the alarm
-        alarm(5);
+        alarm(5); // this comes from unistd.h
 
         // get the answer
         while (1) {
