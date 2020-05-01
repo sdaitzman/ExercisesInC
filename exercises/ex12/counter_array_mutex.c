@@ -8,6 +8,7 @@ License: GNU GPLv3
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include "mutex.h"
 
 #define NUM_CHILDREN 2
 
