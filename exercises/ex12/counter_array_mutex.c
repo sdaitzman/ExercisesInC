@@ -67,7 +67,7 @@ void child_code(Shared *shared) {
         mutex_lock(shared->m);
 
         if (shared->counter >= shared->end) {
-            mutex_unlock(shared->m);
+            mutex_unlock(shared->m); // TODO: clarify if I should actually unlock the mutex here. I want to prevent a case where it's locked and nothing else can do work, right??
             return;
         }
         shared->array[shared->counter]++;
