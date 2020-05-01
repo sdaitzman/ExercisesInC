@@ -27,17 +27,16 @@ typedef struct {
     int counter;
     int end;
     int *array;
+    Mutex *m;
 } Shared;
 
 Shared *make_shared(int end) {
     int i;
     Shared *shared = check_malloc(sizeof(Shared));
-
+    shared->m = make_mutex(); /* in mutex.c, creates the mutex! */
     shared->counter = 0;
     shared->end = end;
-
     shared->array = check_malloc(shared->end * sizeof(int));
-
     for (i=0; i<shared->end; i++) shared->array[i] = 0;
     return shared;
 }
@@ -60,12 +59,24 @@ void child_code(Shared *shared) {
     printf("Starting child at counter %d\n", shared->counter);
 
     while (1) {
-        if (shared->counter >= shared->end) return;
+
+        // THIS PART IS THREAD-UNSAFE BY DEFAULT
+        // Locking with the mutex before and unlocking after fixes it :~)
+        // https://sites.google.com/site/softsys20/lectures/lecture-25
+
+        mutex_lock(shared->m);
+
+        if (shared->counter >= shared->end) {
+            mutex_unlock(shared->m);
+            return;
+        }
         shared->array[shared->counter]++;
         shared->counter++;
-
         if (shared->counter % 10000 == 0) printf("%d\n", shared->counter);
     }
+
+    mutex_unlock(shared->m);
+
 }
 
 void *entry(void *arg) {
